@@ -1,0 +1,36 @@
+{
+    "configVersion": "v1",
+    "appId": "com.frangiamore.StreetSeeker",
+    "triggers": {
+        "namedTriggers": {
+            "search_success": {
+                "eventName": "search_result_selected",
+                "actionName": "smart_review_action"
+            }
+        }
+    },
+    "actions": {
+        "namedActions": {
+            "smart_review_action": {
+                "actionType": "review_prompt",
+                "actionData": {},
+                "dev_note": "don't show for 21 days (504h) after shown, min app version check, and some best practices for times to avoid",
+                "condition": "(eventCount('system_app_review_requested') == 0 || latestEventTime('system_app_review_requested') < now() - duration('504h')) && versionGreaterThan(app_version, '1.0') && !device_low_power_mode && has_active_network && !low_data_mode && device_battery_level > 0.2"
+            }
+        }
+    },
+    "notifications": {
+        "onboarding_reminder_notification": {
+            "title": "Try Street Seeker",
+            "body": "Find UK addresses with ease. Try it now!",
+            "cancelationEvents": ["search_submitted"],
+            "deliveryTimeOfDayStart": "10:00",
+            "deliveryTimeOfDayEnd": "22:00",
+            "deliveryTime": {
+                "eventName": "app_entered_background",
+                "eventInstance": "latest-once",
+                "eventOffsetSeconds": 900
+            }
+        }
+    }
+}
