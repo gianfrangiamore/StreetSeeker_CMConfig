@@ -32,5 +32,10 @@
                 "eventOffsetSeconds": 900
             }
         }
+    },
+    "conditions": {
+      "namedConditions": {
+        "use_address_cache": "true"
+      }
     }
 }
