@@ -31,7 +31,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      JSON_CONFIG: 'cmConfigSigned.json'
+      JSON_CONFIG: 'cmConfig.json'
       SIGNED_NAME: 'cmConfigSigned.cmconfig'
     steps:
       - name: Checkout
