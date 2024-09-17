@@ -35,7 +35,8 @@
     },
     "conditions": {
         "namedConditions": {
-            "use_address_cache": "true"
+            "use_address_cache": "true",
+            "use_cloud_functions": "false"
         }
     }
 }
