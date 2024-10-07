@@ -3,33 +3,51 @@
     "appId": "com.frangiamore.StreetSeeker",
     "triggers": {
         "namedTriggers": {
-            "search_success": {
+            "usedKeyFeatureReviewTrigger": {
                 "eventName": "search_result_selected",
-                "actionName": "smart_review_action"
+                "condition": "eventCount('search_result_selected') > 2",
+                "actionName": "smartReviewAction"
             }
         }
     },
     "actions": {
         "namedActions": {
-            "smart_review_action": {
+            "smartReviewAction": {
                 "actionType": "review_prompt",
                 "actionData": {},
-                "dev_note": "don't show for 21 days (504h) after shown, min app version check, and some best practices for times to avoid",
-                "condition": "(eventCount('system_app_review_requested') == 0 || latestEventTime('system_app_review_requested') < now() - duration('504h')) && versionGreaterThan(app_version, '1.0') && !device_low_power_mode && has_active_network && !low_data_mode && device_battery_level > 0.2"
+                "dev_comment": "don't show for 21 days (504h) after shown, min app version check, and some best practices for times to avoid",
+                "condition": "(eventCount('system_app_review_requested') == 0 || latestEventTime('system_app_review_requested') < now() - duration('504h')) && versionGreaterThan(app_version, '1.0.23') && !device_low_power_mode && has_active_network && !low_data_mode && device_battery_level > 0.2 && !versionLessThan(os_version, '17.0') && locale_language_code == 'en'"
             }
         }
     },
     "notifications": {
-        "onboarding_reminder_notification": {
-            "title": "Try Street Seeker",
-            "body": "Find UK addresses with ease. Try it now!",
+        "onboardingReminder": {
+            "title": "Find Named Addresses",
+            "body": "Easily locate UK addresses. Try it today!",
             "cancelationEvents": ["search_submitted"],
             "deliveryTimeOfDayStart": "10:00",
-            "deliveryTimeOfDayEnd": "22:00",
+            "deliveryTimeOfDayEnd": "20:00",
             "deliveryTime": {
                 "eventName": "app_entered_background",
                 "eventInstance": "latest-once",
                 "eventOffsetSeconds": 900
+            }
+        },
+        "secondOnboardingReminder": {
+            "title": "Locate Hard-to-Find Addresses",
+            "body": "Accurately locate UK addresses. Start searching today!",
+            "cancelationEvents": ["search_submitted"],
+            "deliveryTimeOfDayStart": "10:00",
+            "deliveryTimeOfDayEnd": "20:00",
+            "dev_note": "259,200s is 3 days, and 345,600s is 4 days - so this will be delivered between day 3 and day 7 after last app launch. It's canceled if the user creates an account (user_sync event). The ideal delivery time is when the user is holding their device (not flat), and it's screen is on.",
+            "deliveryTime": {
+                "eventName": "app_entered_background",
+                "eventInstance": "latest-once",
+                "eventOffsetSeconds": 259200
+            },
+            "idealDeliveryConditions": {
+                "condition": "screen_brightness > 0.01 && device_orientation != 'face_up' && device_orientation != 'face_down'",
+                "maxWaitTimeSeconds": 345600
             }
         }
     },
