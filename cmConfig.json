@@ -55,7 +55,7 @@
         "namedConditions": {
             "use_address_cache": "true",
             "use_cloud_functions": "false",
-            "use_cloud_functions_v2": "false"
+            "use_cloud_functions_v2": "true"
         }
     }
 }
