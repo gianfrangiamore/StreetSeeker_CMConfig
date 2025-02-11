@@ -56,6 +56,7 @@
             "use_address_cache": "true",
             "use_cloud_functions": "false",
             "use_cloud_functions_v2": "true",
+            "show_postcode_scanner": "true",
             "is_update_required": "versionLessThan(app_version, '1.0.26')",
             "has_tapped_onboarding_reminder": "eventCount('notifications:tapped:io.criticalmoments.notifications.onboardingReminder') > 0",
             "has_tapped_second_onboarding_reminder": "eventCount('notifications:tapped:io.criticalmoments.notifications.secondOnboardingReminder') > 0"
